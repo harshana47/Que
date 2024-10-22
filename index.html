@@ -15,25 +15,32 @@
             border-radius: 8px;
             margin: 4px;
             display: flex;
-            top: 200px;
             justify-content: center;
             align-items: center;
             position: relative;
+            margin-top: 15%;
         }
+
         .walker {
             position: absolute;
             top: 10px;
             width: 80%;
         }
-        .letter{
+
+        .letter {
             font-weight: bold;
             font-size: 20px;
         }
-        .home{
+
+        .home {
             width: 200px;
             height: 200px;
             position: absolute;
             top: -5%;
+        }
+
+        .controls {
+            margin: 20px;
         }
     </style>
 </head>
@@ -68,9 +75,16 @@
     </div>
 </section>
 
+<div class="controls" style="margin-left: 5%">
+    <button id="startBtn" style="background-color: dodgerblue;height: 30px; width: 50px">Start</button>
+    <button id="stopBtn" style="background-color: red;height: 30px; width: 50px">Stop</button>
+</div>
+
 <script>
     let arr = ["A", "B", "C", "D", "E", "F"];
-    setInterval(() => {
+    let intervalId;
+
+    const updateLabels = () => {
         let last_value = arr.pop();
         arr.unshift(last_value);
         console.log(arr);
@@ -79,7 +93,20 @@
         labels.forEach((label, index) => {
             label.innerText = arr[index];
         });
-    }, 2000);
+
+    };
+
+    document.getElementById('startBtn').addEventListener('click', () => {
+        if (!intervalId) {
+            intervalId = setInterval(updateLabels, 2000);
+        }
+    });
+
+    document.getElementById('stopBtn').addEventListener('click', () => {
+        clearInterval(intervalId);
+        intervalId = null;
+
+    });
 </script>
 </body>
 </html>

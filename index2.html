@@ -28,6 +28,9 @@
         #F {
             margin-top: 200%;
         }
+        .controls {
+            margin: 20px;
+        }
     </style>
 </head>
 <body>
@@ -40,18 +43,35 @@
     <div id="F" class="box" style="background-color: hotpink;">F</div>
 </section>
 
+<div class="controls" style="margin-left: 5%">
+    <button id="startBtn" style="background-color: dodgerblue;height: 30px; width: 50px">Start</button>
+    <button id="stopBtn" style="background-color: red;height: 30px; width: 50px">Stop</button>
+</div>
+
 <script>
     const boxes = Array.from(document.querySelectorAll('.box'));
     const colors = ['red', 'green', 'blue', 'yellow', 'lightpink', 'hotpink'];
+    let intervalId;
 
-    setInterval(() => {
+    const updateColors = () => {
         const lastColor = colors.pop();
         colors.unshift(lastColor);
 
         boxes.forEach((box, index) => {
             box.style.backgroundColor = colors[index];
         });
-    }, 2000);
+    };
+
+    document.getElementById('startBtn').addEventListener('click', () => {
+        if (!intervalId) {
+            intervalId = setInterval(updateColors, 2000);
+        }
+    });
+
+    document.getElementById('stopBtn').addEventListener('click', () => {
+        clearInterval(intervalId);
+        intervalId = null;
+    });
 </script>
 </body>
 </html>
